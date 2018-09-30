@@ -9,6 +9,9 @@
     Title="Data Binding From Scratch"
     Width="800"
     Height="450">
+    <Window.DataContext>
+        <y:ViewModel />
+    </Window.DataContext>
     <Grid>
         <TextBlock
             Text="{y:Bind test}"
