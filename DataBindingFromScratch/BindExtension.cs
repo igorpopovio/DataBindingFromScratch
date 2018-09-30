@@ -1,20 +1,34 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Markup;
 
 namespace DataBindingFromScratch
 {
     public class BindExtension : MarkupExtension
     {
-        public string Message { get; set; }
+        public string Path { get; set; }
 
-        public BindExtension(string message)
+        public BindExtension(string path)
         {
-            Message = message;
+            Path = path;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return Message;
+            var service = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
+
+            var targetObject = service.TargetObject as DependencyObject;
+            var targetProperty = service.TargetProperty as DependencyProperty;
+
+            var dataContext = typeof(FrameworkElement)
+                .GetProperty("DataContext")
+                .GetValue(targetObject);
+
+            var value = dataContext.GetType()
+                .GetProperty(Path)
+                .GetValue(dataContext);
+
+            return $"{value}";
         }
     }
 }
