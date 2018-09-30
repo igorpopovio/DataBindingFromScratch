@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Timers;
 
 namespace DataBindingFromScratch
 {
@@ -31,6 +32,12 @@ namespace DataBindingFromScratch
         {
             Name = "Default name";
             Age = 10;
+            var timer = new Timer(1000);
+            timer.Elapsed += (s, e) =>
+            {
+                Age++;
+            };
+            timer.Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

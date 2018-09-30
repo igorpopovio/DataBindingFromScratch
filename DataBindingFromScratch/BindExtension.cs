@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Markup;
 
@@ -24,11 +25,23 @@ namespace DataBindingFromScratch
                 .GetProperty("DataContext")
                 .GetValue(targetObject);
 
-            var value = dataContext.GetType()
+            var context = dataContext as INotifyPropertyChanged;
+            context.PropertyChanged += (s, e) =>
+            {
+                var updatedValue = dataContext.GetType()
+                    .GetProperty(Path)
+                    .GetValue(dataContext);
+                targetObject.Dispatcher.Invoke(() =>
+                {
+                    targetObject.SetValue(targetProperty, $"{updatedValue}");
+                });
+            };
+
+            var currentValue = dataContext.GetType()
                 .GetProperty(Path)
                 .GetValue(dataContext);
 
-            return $"{value}";
+            return $"{currentValue}";
         }
     }
 }

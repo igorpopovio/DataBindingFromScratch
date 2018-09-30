@@ -14,7 +14,7 @@
     </Window.DataContext>
     <Grid>
         <TextBlock
-            Text="{y:Bind Name}"
+            Text="{y:Bind Age}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontWeight="Bold"
