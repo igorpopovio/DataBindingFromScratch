@@ -28,6 +28,8 @@ namespace DataBindingFromScratch
             var context = dataContext as INotifyPropertyChanged;
             context.PropertyChanged += (s, e) =>
             {
+                if (Path != e.PropertyName) return;
+
                 var updatedValue = dataContext.GetType()
                     .GetProperty(Path)
                     .GetValue(dataContext);
