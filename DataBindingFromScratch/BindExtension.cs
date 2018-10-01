@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 
 namespace DataBindingFromScratch
@@ -38,6 +39,18 @@ namespace DataBindingFromScratch
                     targetObject.SetValue(targetProperty, $"{updatedValue}");
                 });
             };
+
+            DependencyPropertyDescriptor
+                .FromProperty(targetProperty, targetObject.GetType())
+                .AddValueChanged(targetObject, (sender, args) =>
+                {
+                    if (sender.GetType() != typeof(TextBox)) return;
+
+                    var val = targetObject.GetValue(targetProperty);
+                    dataContext.GetType()
+                        .GetProperty(Path)
+                        .SetValue(dataContext, val);
+                });
 
             var currentValue = dataContext.GetType()
                 .GetProperty(Path)
