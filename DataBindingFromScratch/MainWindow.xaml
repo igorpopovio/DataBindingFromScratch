@@ -12,12 +12,25 @@
     <Window.DataContext>
         <y:ViewModel />
     </Window.DataContext>
-    <Grid>
+    <StackPanel>
+        <TextBox
+            x:Name="editBox"
+            Text="{y:Bind Name}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Bold"
+            FontSize="72" />
         <TextBlock
             Text="{y:Bind Age}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontWeight="Bold"
             FontSize="72" />
-    </Grid>
+        <TextBlock
+            Text="{y:Bind Name}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontWeight="Bold"
+            FontSize="72" />
+    </StackPanel>
 </Window>
